@@ -1,5 +1,6 @@
 import axios from "axios";
 import "./App.css";
+import { CgCopyright } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import {
 	Accordion,
@@ -8,33 +9,15 @@ import {
 	AccordionIcon,
 	AccordionPanel,
 	Box,
+	Text,
+	HStack,
 } from "@chakra-ui/react";
+import SearchInput from "./components/SearchInput";
+import FoodList, { SearchResponse } from "./components/FoodList";
 
-interface SearchResponse {
-	totalHits: number;
-	currentPage: number;
-	totalPages: number;
-	foods: AbrigedFoodItem[];
-}
-interface AbrigedFoodItem {
-	dataType: string;
-	description: string;
-	fdcId: number;
-	foodNutrients: AbridgedFoodNutrient[];
-	ndbNumber: number;
-	publicationDate: string;
-	foodCode?: string;
-	score: number;
-}
-interface AbridgedFoodNutrient {
-	nutrientId: number;
-	nutrientName: string;
-	amount: number;
-	unitName: string;
-	value: number;
-}
 function App() {
-	const [foodItems, setFoodItems] = useState<AbrigedFoodItem[]>([]);
+	const [searchText, setSearchText] = useState("");
+	// const [foodItems, setFoodItems] = useState<AbrigedFoodItem[]>([]);
 	const [searchResponse, setSearchResponse] = useState<SearchResponse>({
 		totalHits: 0,
 		currentPage: 0,
@@ -45,58 +28,39 @@ function App() {
 		const foodDataResponse = axios
 			.get("https://api.nal.usda.gov/fdc/v1/foods/search", {
 				params: {
-					dataType: "SR Legacy",
+					dataType: `Branded, SR Legacy, Foundation, Survey(FNDDS)`,
 					api_key: "SaQy2io5EY4siiZgsIKGCHkQxrLaJE7SPZdfkveT",
-					query: "cashew",
-					pageSize: 30,
+					query: searchText,
+					pageSize: 10,
 				},
 			})
-			.then((res) => setSearchResponse(res.data));
-	}, []);
+			.then((res) => {
+				setSearchResponse(res.data);
+				console.log(res.data);
+			});
+	}, [searchText]);
 	return (
 		<>
-			<h1>food data</h1>
-			<Accordion allowToggle>
-				{searchResponse &&
-					searchResponse.foods.map((eachFoodItem) => (
-						<AccordionItem>
-							<h2>
-								<AccordionButton>
-									<Box as="span" flex="1" textAlign="left">
-										{eachFoodItem.description}
-									</Box>
-									<AccordionIcon />
-								</AccordionButton>
-							</h2>
-							<AccordionPanel pb={4}>
-								<table>
-									<tr>
-										<th>Nutrient</th>
-										<th>Amount Present</th>
-										<th>Unit</th>
-									</tr>
-									{eachFoodItem.foodNutrients.map(
-										(eachNutrientItem) => (
-											<tr>
-												<td>
-													{
-														eachNutrientItem.nutrientName
-													}
-												</td>
-												<td>
-													{eachNutrientItem.value}
-												</td>
-												<td>
-													{eachNutrientItem.unitName.toLowerCase()}
-												</td>
-											</tr>
-										)
-									)}
-								</table>
-							</AccordionPanel>
-						</AccordionItem>
-					))}
-			</Accordion>
+			<SearchInput
+				onSubmit={(e) => {
+					setSearchText(e.searchText);
+					console.log(e.searchText);
+				}}
+			></SearchInput>
+			<FoodList
+				searchResponse={searchResponse}
+				searchText={searchText}
+			></FoodList>
+			<HStack>
+				<Text marginTop={6}>
+					©️ U.S. Department of Agriculture (USDA), Agricultural
+					Research Service. FoodData Central: Foundation Foods.
+					Version Current: April 2024. Internet:{" "}
+					<a href="https://fdc.nal.usda.gov" target="_blank">
+						fdc.nal.usda.gov
+					</a>
+				</Text>
+			</HStack>
 		</>
 	);
 }
