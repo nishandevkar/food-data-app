@@ -6,9 +6,12 @@ import {
 	AccordionPanel,
 	Box,
 	Text,
+	Button,
+	HStack,
+	VStack,
 } from "@chakra-ui/react";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export interface SearchResponse {
 	totalHits: number;
@@ -40,33 +43,91 @@ interface FoodListProps {
 	searchText: string;
 }
 const FoodList = ({ searchResponse, searchText }: FoodListProps) => {
+	const [selectedFoodIngredient, setSelectedFoodIngredient] =
+		useState<AbrigedFoodItem>();
+
+	const handleSetFoodItem = (foodItem: AbrigedFoodItem) => {
+		// console.log(foodItem);
+		setSelectedFoodIngredient(foodItem);
+		localStorage.setItem(
+			"foodItem",
+			JSON.stringify(selectedFoodIngredient)
+		);
+	};
+
+	const handleRemoveFoodItem = () => {
+		setSelectedFoodIngredient(undefined);
+		localStorage.setItem(
+			"foodItem",
+			JSON.stringify(setSelectedFoodIngredient)
+		);
+	};
+
+	// useEffect(() => {
+	// 	localStorage.getItem("foodItem");
+
+	// }, [selectedFoodIngredient]);
+
 	return (
 		<>
-			<h3>{searchResponse && searchText} data</h3>
 			<Accordion allowToggle>
 				{searchResponse &&
 					searchResponse.foods.map((eachFoodItem, index) => (
 						<AccordionItem key={index}>
 							<h2>
 								<AccordionButton>
-									<Box as="span" flex="1" textAlign="left">
+									<Box flex="1" textAlign="left">
 										{eachFoodItem.description}{" "}
 										{eachFoodItem.dataType === "Branded" ? (
-											<Text>
-												Data Type:{" "}
-												<b>{eachFoodItem.dataType}</b>
-												Brand Name:{" "}
-												<b>{eachFoodItem.brandName} </b>
-												Brand Owner:{" "}
-												<b>{eachFoodItem.brandOwner}</b>
-											</Text>
-										) : (
-											<Text>
-												Data Type:{" "}
-												<b>{eachFoodItem.dataType}</b>
-											</Text>
-										)}
+											<HStack>
+												<Text fontSize="sm">
+													Data Type:{" "}
+													<b>
+														{eachFoodItem.dataType}
+													</b>
+													Brand Name:{" "}
+													<b>
+														{eachFoodItem.brandName}{" "}
+													</b>
+													Brand Owner:{" "}
+													<b>
+														{
+															eachFoodItem.brandOwner
+														}
+													</b>
+												</Text>
+											</HStack>
+										) : null}
+										<Text fontSize={"xs"} color={"gray"}>
+											Data Type:{" "}
+											<b>{eachFoodItem.dataType}</b>
+										</Text>
+										{/* <Box
+												padding={3}
+												display={"flex"}
+												justifyContent={"space-around"}
+											></Box> */}
 									</Box>
+									<HStack spacing={4}>
+										<Button
+											size="sm"
+											onClick={(e) => {
+												handleSetFoodItem(eachFoodItem);
+												e.stopPropagation();
+											}}
+										>
+											Add
+										</Button>
+										<Button
+											size="sm"
+											onClick={(e) => {
+												handleRemoveFoodItem();
+												e.stopPropagation();
+											}}
+										>
+											Remove
+										</Button>
+									</HStack>
 									<AccordionIcon />
 								</AccordionButton>
 							</h2>
