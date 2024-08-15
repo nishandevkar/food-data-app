@@ -1,19 +1,10 @@
+import { HStack, Text } from "@chakra-ui/react";
 import axios from "axios";
-import { CgCopyright } from "react-icons/cg";
 import { useEffect, useState } from "react";
-import {
-	Accordion,
-	AccordionItem,
-	AccordionButton,
-	AccordionIcon,
-	AccordionPanel,
-	Box,
-	Text,
-	HStack,
-} from "@chakra-ui/react";
 import FoodList, { SearchResponse } from "./FoodList";
 import SearchInput from "./SearchInput";
 import SelectDataType from "./SelectDataType";
+import { AbrigedFoodItem } from "./FoodList";
 
 function SearchFoods() {
 	const [searchText, setSearchText] = useState("");
@@ -24,6 +15,7 @@ function SearchFoods() {
 		totalPages: 0,
 		foods: [],
 	});
+
 	useEffect(() => {
 		const foodDataResponse = axios
 			.get("https://api.nal.usda.gov/fdc/v1/foods/search", {
