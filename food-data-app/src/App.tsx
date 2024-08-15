@@ -38,13 +38,6 @@ function App() {
 			.then((res) => {
 				setSearchResponse(res.data);
 			});
-		// const foodListResponse = axios
-		// 	.get("https://api.nal.usda.gov/fdc/v1/foods/list", {
-		// 		params: {
-		// 			api_key: "SaQy2io5EY4siiZgsIKGCHkQxrLaJE7SPZdfkveT",
-		// 		},
-		// 	})
-		// 	.then((res) => console.log(res.data));
 	}, [searchText, selectedDataType]);
 	return (
 		<>
@@ -54,15 +47,13 @@ function App() {
 					console.log(e.searchText);
 				}}
 			></SearchInput>
-			<Box margin={6}>
-				<SelectDataType
-					onSelectDataType={(e) => {
-						setSelectedDataType(e);
-						// console.log(e);
-						// console.log(selectedDataType);
-					}}
-				></SelectDataType>
-			</Box>
+			<SelectDataType
+				onSelectDataType={(e) => {
+					setSelectedDataType(e);
+					// console.log(e);
+					// console.log(selectedDataType);
+				}}
+			></SelectDataType>
 			<FoodList
 				searchResponse={searchResponse}
 				searchText={searchText}

@@ -43,24 +43,13 @@ interface FoodListProps {
 	searchText: string;
 }
 const FoodList = ({ searchResponse, searchText }: FoodListProps) => {
-	const [selectedFoodIngredient, setSelectedFoodIngredient] =
-		useState<AbrigedFoodItem>();
-
 	const handleSetFoodItem = (foodItem: AbrigedFoodItem) => {
 		// console.log(foodItem);
-		setSelectedFoodIngredient(foodItem);
-		localStorage.setItem(
-			"foodItem",
-			JSON.stringify(selectedFoodIngredient)
-		);
+		localStorage.setItem("foodItem", JSON.stringify(foodItem));
 	};
 
 	const handleRemoveFoodItem = () => {
-		setSelectedFoodIngredient(undefined);
-		localStorage.setItem(
-			"foodItem",
-			JSON.stringify(setSelectedFoodIngredient)
-		);
+		localStorage.setItem("foodItem", JSON.stringify(undefined));
 	};
 
 	// useEffect(() => {
@@ -81,10 +70,6 @@ const FoodList = ({ searchResponse, searchText }: FoodListProps) => {
 										{eachFoodItem.dataType === "Branded" ? (
 											<HStack>
 												<Text fontSize="sm">
-													Data Type:{" "}
-													<b>
-														{eachFoodItem.dataType}
-													</b>
 													Brand Name:{" "}
 													<b>
 														{eachFoodItem.brandName}{" "}
@@ -110,6 +95,7 @@ const FoodList = ({ searchResponse, searchText }: FoodListProps) => {
 									</Box>
 									<HStack spacing={4}>
 										<Button
+											colorScheme="teal"
 											size="sm"
 											onClick={(e) => {
 												handleSetFoodItem(eachFoodItem);
@@ -119,7 +105,10 @@ const FoodList = ({ searchResponse, searchText }: FoodListProps) => {
 											Add
 										</Button>
 										<Button
+											colorScheme={"red"}
+											variant={"outline"}
 											size="sm"
+											marginRight={3}
 											onClick={(e) => {
 												handleRemoveFoodItem();
 												e.stopPropagation();
