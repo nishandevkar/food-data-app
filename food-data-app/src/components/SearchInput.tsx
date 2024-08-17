@@ -39,6 +39,8 @@ const SearchInput = ({ onSubmit }: SearchInputProps) => {
 						/>
 						<InputRightElement>
 							<IconButton
+								type="submit"
+								onSubmit={handleSubmit(onSubmit)}
 								aria-label="Search database"
 								icon={<MdOutlineSearch />}
 							/>

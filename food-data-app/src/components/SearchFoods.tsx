@@ -6,7 +6,7 @@ import SearchInput from "./SearchInput";
 import SelectDataType from "./SelectDataType";
 import { AbrigedFoodItem } from "./FoodList";
 import { useLocalStorage } from "react-use";
-import AddDishes from "./AddDishes";
+import AddDishesTray from "./AddDishes";
 import Navbar from "./Navbar";
 
 function SearchFoods() {
@@ -39,13 +39,13 @@ function SearchFoods() {
 	return (
 		<>
 			<Flex paddingY={4}>
-				<AddDishes
+				<AddDishesTray
 					ingredientList={ingredientList}
 					onClear={() => setIngredientList([])}
 					onUpdate={(ingredientList) =>
 						setIngredientList(ingredientList)
 					}
-				></AddDishes>
+				></AddDishesTray>
 				<Spacer></Spacer>
 				<HStack>
 					<SearchInput

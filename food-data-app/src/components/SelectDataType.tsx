@@ -7,7 +7,7 @@ interface SelectDataTypeProps {
 const SelectDataType = ({ onSelectDataType }: SelectDataTypeProps) => {
 	return (
 		<Select
-			variant={"outline"}
+			variant={"filled"}
 			defaultValue=""
 			onChange={(event) => onSelectDataType(event.target.value)}
 		>

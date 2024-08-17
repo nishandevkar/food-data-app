@@ -1,6 +1,9 @@
 import {
 	Button,
 	ButtonGroup,
+	Card,
+	CardBody,
+	CardHeader,
 	Drawer,
 	DrawerBody,
 	DrawerCloseButton,
@@ -11,6 +14,10 @@ import {
 	Flex,
 	HStack,
 	IconButton,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
 	Spacer,
 	Text,
 	useDisclosure,
@@ -19,12 +26,17 @@ import React from "react";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { AbrigedFoodItem } from "./FoodList";
 import { MdDeleteForever } from "react-icons/md";
+import { BiChevronDown } from "react-icons/bi";
 interface AddDishesProps {
 	ingredientList: AbrigedFoodItem[] | undefined;
 	onClear: () => void;
 	onUpdate: (ingredientList: AbrigedFoodItem[]) => void;
 }
-const AddDishes = ({ ingredientList, onClear, onUpdate }: AddDishesProps) => {
+const AddDishesTray = ({
+	ingredientList,
+	onClear,
+	onUpdate,
+}: AddDishesProps) => {
 	const handleRemoveFoodItem = (removeItem: AbrigedFoodItem) => {
 		let updatedList: AbrigedFoodItem[] | undefined = [];
 		updatedList =
@@ -33,7 +45,6 @@ const AddDishes = ({ ingredientList, onClear, onUpdate }: AddDishesProps) => {
 				(ingredient) => ingredient.fdcId !== removeItem.fdcId
 			);
 		updatedList && onUpdate(updatedList);
-		console.log(updatedList);
 	};
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = React.useRef();
@@ -63,7 +74,7 @@ const AddDishes = ({ ingredientList, onClear, onUpdate }: AddDishesProps) => {
 
 					<DrawerBody>
 						<ul className="list-group" data-bs-theme="dark">
-							{ingredientList &&
+							{ingredientList && ingredientList.length > 0 ? (
 								ingredientList.map((ingredient) => (
 									<li
 										className="list-group-item"
@@ -88,15 +99,46 @@ const AddDishes = ({ ingredientList, onClear, onUpdate }: AddDishesProps) => {
 											</Button>
 										</Flex>
 									</li>
-								))}
+								))
+							) : (
+								<Card variant={"outline"}>
+									<CardHeader>
+										{" "}
+										<Text
+											fontStyle={"italic"}
+											fontSize={"medium"}
+										>
+											Select an Ingredient to add to this
+											tray.
+										</Text>
+									</CardHeader>
+								</Card>
+							)}
 						</ul>
 					</DrawerBody>
 
 					<DrawerFooter>
-						<Button variant="outline" mr={3} onClick={onClear}>
+						<Button
+							isDisabled={
+								ingredientList && ingredientList?.length > 0
+									? false
+									: true
+							}
+							variant="outline"
+							mr={3}
+							onClick={onClear}
+						>
 							Clear List
 						</Button>
-						<Button colorScheme="teal" onClick={() => null}>
+						<Button
+							isDisabled={
+								ingredientList && ingredientList?.length > 0
+									? false
+									: true
+							}
+							colorScheme="teal"
+							onClick={() => null}
+						>
 							Save
 						</Button>
 					</DrawerFooter>
@@ -106,4 +148,4 @@ const AddDishes = ({ ingredientList, onClear, onUpdate }: AddDishesProps) => {
 	);
 };
 
-export default AddDishes;
+export default AddDishesTray;
