@@ -78,16 +78,6 @@ const FoodList = ({
 		}
 	};
 
-	const handleRemoveFoodItem = (removeItem: AbrigedFoodItem) => {
-		let updatedList: AbrigedFoodItem[] | undefined = [];
-		updatedList =
-			ingredientList &&
-			ingredientList.filter(
-				(ingredient) => ingredient.fdcId !== removeItem.fdcId
-			);
-		setIngredientList(updatedList);
-	};
-
 	return (
 		<Accordion allowToggle>
 			{searchResponse &&
@@ -126,6 +116,7 @@ const FoodList = ({
 									</Box>
 									<HStack spacing={4}>
 										<Button
+											marginRight={2}
 											colorScheme="teal"
 											size="sm"
 											onClick={(e) => {
@@ -134,20 +125,6 @@ const FoodList = ({
 											}}
 										>
 											Add
-										</Button>
-										<Button
-											colorScheme={"red"}
-											variant={"outline"}
-											size="sm"
-											marginRight={3}
-											onClick={(e) => {
-												handleRemoveFoodItem(
-													eachFoodItem
-												);
-												e.stopPropagation();
-											}}
-										>
-											Remove
 										</Button>
 									</HStack>
 									<AccordionIcon />

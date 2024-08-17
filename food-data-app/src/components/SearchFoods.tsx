@@ -42,6 +42,9 @@ function SearchFoods() {
 				<AddDishes
 					ingredientList={ingredientList}
 					onClear={() => setIngredientList([])}
+					onUpdate={(ingredientList) =>
+						setIngredientList(ingredientList)
+					}
 				></AddDishes>
 				<Spacer></Spacer>
 				<SearchInput

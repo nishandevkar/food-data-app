@@ -8,23 +8,35 @@ import {
 	DrawerFooter,
 	DrawerHeader,
 	DrawerOverlay,
+	Flex,
+	HStack,
+	IconButton,
+	Spacer,
 	Text,
 	useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { AbrigedFoodItem } from "./FoodList";
-
+import { MdDeleteForever } from "react-icons/md";
 interface AddDishesProps {
 	ingredientList: AbrigedFoodItem[] | undefined;
 	onClear: () => void;
+	onUpdate: (ingredientList: AbrigedFoodItem[]) => void;
 }
-const AddDishes = ({ ingredientList, onClear }: AddDishesProps) => {
+const AddDishes = ({ ingredientList, onClear, onUpdate }: AddDishesProps) => {
+	const handleRemoveFoodItem = (removeItem: AbrigedFoodItem) => {
+		let updatedList: AbrigedFoodItem[] | undefined = [];
+		updatedList =
+			ingredientList &&
+			ingredientList.filter(
+				(ingredient) => ingredient.fdcId !== removeItem.fdcId
+			);
+		updatedList && onUpdate(updatedList);
+		console.log(updatedList);
+	};
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = React.useRef();
-	const handleOnClear = () => {
-		onClear();
-	};
 
 	return (
 		<div>
@@ -57,18 +69,31 @@ const AddDishes = ({ ingredientList, onClear }: AddDishesProps) => {
 										className="list-group-item"
 										key={ingredient.fdcId}
 									>
-										{ingredient.description} <br />
+										<Flex paddingTop={"3"}>
+											<Text>
+												{ingredient.description}
+											</Text>
+											<Spacer></Spacer>
+											<Button
+												colorScheme={"red"}
+												variant={"outline"}
+												size={"xs"}
+												onClick={() =>
+													handleRemoveFoodItem(
+														ingredient
+													)
+												}
+											>
+												<MdDeleteForever />
+											</Button>
+										</Flex>
 									</li>
 								))}
 						</ul>
 					</DrawerBody>
 
 					<DrawerFooter>
-						<Button
-							variant="outline"
-							mr={3}
-							onClick={handleOnClear}
-						>
+						<Button variant="outline" mr={3} onClick={onClear}>
 							Clear List
 						</Button>
 						<Button colorScheme="teal" onClick={() => null}>

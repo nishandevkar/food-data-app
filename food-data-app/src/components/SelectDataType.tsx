@@ -9,6 +9,7 @@ const SelectDataType = ({ onSelectDataType }: SelectDataTypeProps) => {
 		<Select
 			defaultValue=""
 			onChange={(event) => onSelectDataType(event.target.value)}
+			marginBottom={3}
 		>
 			<option value="Foundation">Foundation</option>
 			<option value="SR Legacy">SR Legacy</option>
