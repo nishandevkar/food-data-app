@@ -1,5 +1,6 @@
 import {
 	Button,
+	ButtonGroup,
 	Drawer,
 	DrawerBody,
 	DrawerCloseButton,
@@ -7,10 +8,10 @@ import {
 	DrawerFooter,
 	DrawerHeader,
 	DrawerOverlay,
+	Text,
 	useDisclosure,
 } from "@chakra-ui/react";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { AbrigedFoodItem } from "./FoodList";
 
@@ -19,21 +20,29 @@ interface AddDishesProps {
 	onClear: () => void;
 }
 const AddDishes = ({ ingredientList, onClear }: AddDishesProps) => {
-	const [abridgedIngredientList, setAbridgedIngredientList] = useState<
-		AbrigedFoodItem[]
-	>([]);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef = React.useRef();
 	const handleOnClear = () => {
-		setAbridgedIngredientList([]);
 		onClear();
 	};
 
 	return (
 		<div>
-			<Button colorScheme="teal" onClick={onOpen}>
-				<RiPlayListAddFill />
-			</Button>
+			<ButtonGroup>
+				<Button onClick={onOpen}>
+					<RiPlayListAddFill />
+					<Text
+						padding={"1px"}
+						fontSize={"8"}
+						bgColor={"teal"}
+						borderRadius={"50%"}
+						height="3"
+						width="3"
+					>
+						{ingredientList?.length}
+					</Text>
+				</Button>
+			</ButtonGroup>
 			<Drawer isOpen={isOpen} placement="left" onClose={onClose}>
 				<DrawerOverlay />
 				<DrawerContent>
