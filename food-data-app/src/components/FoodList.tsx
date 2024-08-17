@@ -7,7 +7,13 @@ import {
 	Box,
 	Button,
 	HStack,
+	Table,
+	Tbody,
+	Td,
 	Text,
+	Th,
+	Thead,
+	Tr,
 	useToast,
 } from "@chakra-ui/react";
 import { useLocalStorage } from "react-use";
@@ -79,7 +85,7 @@ const FoodList = ({
 	};
 
 	return (
-		<Accordion allowToggle>
+		<Accordion allowToggle variant={"outline"}>
 			{searchResponse &&
 				searchResponse.foods.map(
 					(eachFoodItem, index) =>
@@ -108,11 +114,6 @@ const FoodList = ({
 											Data Type:{" "}
 											<b>{eachFoodItem.dataType}</b>
 										</Text>
-										{/* <Box
-												padding={3}
-												display={"flex"}
-												justifyContent={"space-around"}
-											></Box> */}
 									</Box>
 									<HStack spacing={4}>
 										<Button
@@ -130,43 +131,46 @@ const FoodList = ({
 									<AccordionIcon />
 								</AccordionButton>
 								<AccordionPanel pb={4}>
-									<table className="table table-dark">
-										<thead>
-											<tr>
-												<th>Nutrient</th>
-												<th>Amount Present</th>
-												<th>Unit</th>
-											</tr>
-										</thead>
-										<tbody>
+									<Table
+										variant="simple"
+										colorScheme="teal"
+										size="sm"
+										marginY={4}
+									>
+										<Thead padding={2}>
+											<Tr>
+												<Th>Nutrient</Th>
+												<Th>Amount Present</Th>
+												<Th>Unit</Th>
+											</Tr>
+										</Thead>
+										<Tbody padding={2}>
 											{eachFoodItem.foodNutrients.map(
 												(eachNutrientItem) =>
 													eachNutrientItem.value ? (
-														<tr
+														<Tr
 															key={
 																eachNutrientItem.nutrientId
 															}
 														>
-															<td>
+															<Td>
 																{
 																	eachNutrientItem.nutrientName
 																}
-															</td>
-															<td>
+															</Td>
+															<Td>
 																{
 																	eachNutrientItem.value
 																}
-															</td>
-															<td>
+															</Td>
+															<Td>
 																{eachNutrientItem.unitName.toLowerCase()}
-															</td>
-														</tr>
-													) : (
-														<></>
-													)
+															</Td>
+														</Tr>
+													) : null
 											)}
-										</tbody>
-									</table>
+										</Tbody>
+									</Table>
 								</AccordionPanel>
 							</AccordionItem>
 						)

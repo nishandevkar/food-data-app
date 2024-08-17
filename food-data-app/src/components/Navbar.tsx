@@ -1,13 +1,17 @@
-import { Box, HStack } from "@chakra-ui/react";
+import { Flex, HStack, Heading, Spacer, Text } from "@chakra-ui/react";
 import { ReactNode } from "react";
-interface NavbarProps {
-	children: ReactNode;
-}
-const Navbar = ({ children }: NavbarProps) => {
+import ColorModeSwitch from "./ColorModeSwitch";
+const Navbar = () => {
 	return (
-		<Box display={"flex"}>
-			<HStack padding="1rem">{children}</HStack>
-		</Box>
+		<Flex margin={3}>
+			<Heading as="h2" size="xl">
+				SearchFoods
+			</Heading>
+			<Spacer></Spacer>
+			<HStack>
+				<ColorModeSwitch></ColorModeSwitch>
+			</HStack>
+		</Flex>
 	);
 };
 

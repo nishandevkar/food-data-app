@@ -37,8 +37,8 @@ function SearchFoods() {
 			});
 	}, [searchText, selectedDataType]);
 	return (
-		<>
-			<Flex paddingY={4}>
+		<Box margin={30}>
+			<Flex marginY={4}>
 				<AddDishesTray
 					ingredientList={ingredientList}
 					onClear={() => setIngredientList([])}
@@ -76,7 +76,7 @@ function SearchFoods() {
 					</a>
 				</Text>
 			</HStack>
-		</>
+		</Box>
 	);
 }
 
