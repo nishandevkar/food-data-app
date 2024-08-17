@@ -1,4 +1,4 @@
-import { Flex, HStack, Spacer, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, Spacer, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import FoodList, { SearchResponse } from "./FoodList";
@@ -47,17 +47,20 @@ function SearchFoods() {
 					}
 				></AddDishes>
 				<Spacer></Spacer>
-				<SearchInput
-					onSubmit={(e) => {
-						setSearchText(e.searchText);
-					}}
-				></SearchInput>
+				<HStack>
+					<SearchInput
+						onSubmit={(e) => {
+							setSearchText(e.searchText);
+						}}
+					></SearchInput>
+					<SelectDataType
+						onSelectDataType={(e) => {
+							setSelectedDataType(e);
+						}}
+					></SelectDataType>
+				</HStack>
 			</Flex>
-			<SelectDataType
-				onSelectDataType={(e) => {
-					setSelectedDataType(e);
-				}}
-			></SelectDataType>
+
 			<FoodList
 				searchResponse={searchResponse}
 				ingredientList={ingredientList}

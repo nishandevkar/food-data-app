@@ -1,6 +1,16 @@
-import { Box, HStack, Text } from "@chakra-ui/react";
+import {
+	Box,
+	Button,
+	HStack,
+	IconButton,
+	Input,
+	InputGroup,
+	InputRightElement,
+	Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import { MdOutlineSearch } from "react-icons/md";
 
 interface SearchInputProps {
 	onSubmit: (data: FieldValues) => void;
@@ -15,17 +25,25 @@ const SearchInput = ({ onSubmit }: SearchInputProps) => {
 	return (
 		<Box>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				{/* <Text fontSize={"3xl"}>Search Foods</Text> */}
-				<HStack>
-					<input
-						{...register("searchText", {
-							required: true,
-							minLength: 3,
-						})}
-						id="searchText"
-						type="text"
-						className="form-control"
-					/>
+				<HStack marginX={2}>
+					<InputGroup size="md">
+						<Input
+							variant={"filled"}
+							placeholder="Search"
+							{...register("searchText", {
+								required: true,
+								minLength: 3,
+							})}
+							id="searchText"
+							type="text"
+						/>
+						<InputRightElement>
+							<IconButton
+								aria-label="Search database"
+								icon={<MdOutlineSearch />}
+							/>
+						</InputRightElement>
+					</InputGroup>
 					{errors.name?.type === "required" && (
 						<p className="text-danger">
 							The search text is required
@@ -36,9 +54,6 @@ const SearchInput = ({ onSubmit }: SearchInputProps) => {
 							The name should be 3 characters long
 						</p>
 					)}
-					{/* <button className="btn btn-primary m-3" type="submit">
-						Submit{" "}
-					</button> */}
 				</HStack>
 			</form>
 		</Box>

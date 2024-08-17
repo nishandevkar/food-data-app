@@ -70,7 +70,7 @@ const AddDishes = ({ ingredientList, onClear, onUpdate }: AddDishesProps) => {
 										key={ingredient.fdcId}
 									>
 										<Flex paddingTop={"3"}>
-											<Text>
+											<Text width={"10rem"}>
 												{ingredient.description}
 											</Text>
 											<Spacer></Spacer>
