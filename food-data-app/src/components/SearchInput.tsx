@@ -15,7 +15,7 @@ const SearchInput = ({ onSubmit }: SearchInputProps) => {
 	return (
 		<Box>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<Text fontSize={"3xl"}>Search Foods</Text>
+				{/* <Text fontSize={"3xl"}>Search Foods</Text> */}
 				<HStack>
 					<input
 						{...register("searchText", {
@@ -36,9 +36,9 @@ const SearchInput = ({ onSubmit }: SearchInputProps) => {
 							The name should be 3 characters long
 						</p>
 					)}
-					<button className="btn btn-primary m-3" type="submit">
+					{/* <button className="btn btn-primary m-3" type="submit">
 						Submit{" "}
-					</button>
+					</button> */}
 				</HStack>
 			</form>
 		</Box>

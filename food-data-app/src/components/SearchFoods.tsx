@@ -1,12 +1,18 @@
-import { HStack, Text } from "@chakra-ui/react";
+import { Flex, HStack, Spacer, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import FoodList, { SearchResponse } from "./FoodList";
 import SearchInput from "./SearchInput";
 import SelectDataType from "./SelectDataType";
 import { AbrigedFoodItem } from "./FoodList";
+import { useLocalStorage } from "react-use";
+import AddDishes from "./AddDishes";
+import Navbar from "./Navbar";
 
 function SearchFoods() {
+	const [ingredientList, setIngredientList] = useLocalStorage<
+		AbrigedFoodItem[]
+	>("ingredientList", []);
 	const [searchText, setSearchText] = useState("");
 	const [selectedDataType, setSelectedDataType] = useState("");
 	const [searchResponse, setSearchResponse] = useState<SearchResponse>({
@@ -23,7 +29,7 @@ function SearchFoods() {
 					dataType: selectedDataType,
 					api_key: "SaQy2io5EY4siiZgsIKGCHkQxrLaJE7SPZdfkveT",
 					query: searchText,
-					pageSize: 10,
+					pageSize: 6,
 				},
 			})
 			.then((res) => {
@@ -32,12 +38,18 @@ function SearchFoods() {
 	}, [searchText, selectedDataType]);
 	return (
 		<>
-			<SearchInput
-				onSubmit={(e) => {
-					setSearchText(e.searchText);
-					console.log(e.searchText);
-				}}
-			></SearchInput>
+			<Flex paddingY={4}>
+				<AddDishes
+					ingredientList={ingredientList}
+					onClear={() => setIngredientList([])}
+				></AddDishes>
+				<Spacer></Spacer>
+				<SearchInput
+					onSubmit={(e) => {
+						setSearchText(e.searchText);
+					}}
+				></SearchInput>
+			</Flex>
 			<SelectDataType
 				onSelectDataType={(e) => {
 					setSelectedDataType(e);
@@ -45,7 +57,8 @@ function SearchFoods() {
 			></SelectDataType>
 			<FoodList
 				searchResponse={searchResponse}
-				searchText={searchText}
+				ingredientList={ingredientList}
+				setIngredientList={setIngredientList}
 			></FoodList>
 			<HStack>
 				<Text marginTop={6}>
