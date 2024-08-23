@@ -3,51 +3,30 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "bootstrap/dist/css/bootstrap.css";
 import { ChakraProvider, ThemeConfig } from "@chakra-ui/react";
-import { extendTheme } from "@chakra-ui/react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const config: ThemeConfig = {
-	initialColorMode: "dark",
-	useSystemColorMode: false,
-};
+import {
+	QueryClient,
+	QueryClientProvider,
+	useQuery,
+} from "@tanstack/react-query";
+import theme from "./theme.ts";
 
-const theme = extendTheme({
-	config,
-	components: {
-		Button: {
-			baseStyle: {
-				_focus: {
-					boxShadow: "none",
-				},
-			},
-		},
-		Select: {
-			baseStyle: {
-				_focus: {
-					boxShadow: "none",
-				},
-			},
-		},
-	},
-	colors: {
-		gray: {
-			50: "#f9f9f9",
-			100: "#ededed",
-			200: "#d3d3d3",
-			300: "#b3b3b3",
-			400: "#a0a0a0",
-			500: "#898989",
-			600: "#636363",
-			700: "#202020",
-			800: "#121212",
-			900: "#111",
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false, // default: true
 		},
 	},
 });
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<ChakraProvider theme={theme}>
-			<App />
-		</ChakraProvider>
+		<QueryClientProvider client={queryClient}>
+			<ChakraProvider theme={theme}>
+				<ReactQueryDevtools />
+				<App />
+			</ChakraProvider>
+		</QueryClientProvider>
 	</StrictMode>
 );

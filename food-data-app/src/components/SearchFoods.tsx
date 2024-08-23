@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Spacer, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, Spacer, Spinner, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import FoodList, { SearchResponse } from "./FoodList";
@@ -8,6 +8,7 @@ import { AbrigedFoodItem } from "./FoodList";
 import { useLocalStorage } from "react-use";
 import AddDishesTray from "./AddDishes";
 import Navbar from "./Navbar";
+import { useQuery } from "@tanstack/react-query";
 
 function SearchFoods() {
 	const [ingredientList, setIngredientList] = useLocalStorage<
@@ -22,20 +23,27 @@ function SearchFoods() {
 		foods: [],
 	});
 
-	useEffect(() => {
-		const foodDataResponse = axios
-			.get("https://api.nal.usda.gov/fdc/v1/foods/search", {
-				params: {
-					dataType: selectedDataType,
-					api_key: "SaQy2io5EY4siiZgsIKGCHkQxrLaJE7SPZdfkveT",
-					query: searchText,
-					pageSize: 6,
-				},
-			})
-			.then((res) => {
-				setSearchResponse(res.data);
-			});
-	}, [searchText, selectedDataType]);
+	const queryResponse = useQuery({
+		queryKey: ["searchResult", searchText, selectedDataType],
+		queryFn: () =>
+			axios
+				.get<SearchResponse>(
+					"https://api.nal.usda.gov/fdc/v1/foods/search",
+					{
+						params: {
+							dataType: selectedDataType,
+							api_key: "SaQy2io5EY4siiZgsIKGCHkQxrLaJE7SPZdfkveT",
+							query: searchText,
+							pageSize: 6,
+						},
+					}
+				)
+				.then((res) => {
+					setSearchResponse(res.data);
+				}),
+	});
+
+	// if (queryResponse.error) return queryResponse.error.message;
 	return (
 		<Box margin={30}>
 			<Flex marginY={4}>
@@ -61,11 +69,15 @@ function SearchFoods() {
 				</HStack>
 			</Flex>
 
-			<FoodList
-				searchResponse={searchResponse}
-				ingredientList={ingredientList}
-				setIngredientList={setIngredientList}
-			></FoodList>
+			{queryResponse.isPending ? (
+				<Spinner />
+			) : (
+				<FoodList
+					searchResponse={searchResponse}
+					ingredientList={ingredientList}
+					setIngredientList={setIngredientList}
+				></FoodList>
+			)}
 			<HStack>
 				<Text marginTop={6}>
 					©️ U.S. Department of Agriculture (USDA), Agricultural
