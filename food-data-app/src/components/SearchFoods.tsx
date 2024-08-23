@@ -6,7 +6,7 @@ import SearchInput from "./SearchInput";
 import SelectDataType from "./SelectDataType";
 import { AbrigedFoodItem } from "./FoodList";
 import { useLocalStorage } from "react-use";
-import AddDishesTray from "./AddDishes";
+import IngredientsTray from "./IngredientsTray";
 import Navbar from "./Navbar";
 import { useQuery } from "@tanstack/react-query";
 import ErrorPage from "../pages/ErrorPage";
@@ -17,12 +17,6 @@ function SearchFoods() {
 	>("ingredientList", []);
 	const [searchText, setSearchText] = useState("");
 	const [selectedDataType, setSelectedDataType] = useState("");
-	const [searchResponse, setSearchResponse] = useState<SearchResponse>({
-		totalHits: 0,
-		currentPage: 0,
-		totalPages: 0,
-		foods: [],
-	});
 
 	const queryResponse = useQuery({
 		queryKey: ["searchResult", searchText, selectedDataType],
@@ -61,14 +55,16 @@ function SearchFoods() {
 						}}
 					></SelectDataType>
 				</HStack>
-				<Spacer></Spacer>
-				<AddDishesTray
-					ingredientList={ingredientList}
-					onClear={() => setIngredientList([])}
-					onUpdate={(ingredientList) =>
-						setIngredientList(ingredientList)
-					}
-				></AddDishesTray>
+				<Spacer />
+				<Box marginLeft={4}>
+					<IngredientsTray
+						ingredientList={ingredientList}
+						onClear={() => setIngredientList([])}
+						onUpdate={(ingredientList) =>
+							setIngredientList(ingredientList)
+						}
+					></IngredientsTray>
+				</Box>
 			</Flex>
 
 			{queryResponse.isPending ? (
@@ -80,16 +76,6 @@ function SearchFoods() {
 					setIngredientList={setIngredientList}
 				></FoodList>
 			)}
-			<HStack>
-				<Text marginTop={6}>
-					©️ U.S. Department of Agriculture (USDA), Agricultural
-					Research Service. FoodData Central: Foundation Foods.
-					Version Current: April 2024. Internet:{" "}
-					<a href="https://fdc.nal.usda.gov" target="_blank">
-						fdc.nal.usda.gov
-					</a>
-				</Text>
-			</HStack>
 		</Box>
 	);
 }

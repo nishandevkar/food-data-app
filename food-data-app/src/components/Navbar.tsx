@@ -1,6 +1,6 @@
 import { Flex, HStack, Heading, Spacer } from "@chakra-ui/react";
 import { TbHealthRecognition } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ColorModeSwitch from "./ColorModeSwitch";
 const Navbar = () => {
 	return (
@@ -10,13 +10,45 @@ const Navbar = () => {
 					<TbHealthRecognition />
 				</Heading>
 
-				<HStack>
-					<Link to={"/planner"}>
-						<Heading size={"xs"}>Planner</Heading>
-					</Link>
-					<Link to={"/ingredients"}>
-						<Heading size={"xs"}>Ingredients</Heading>
-					</Link>
+				<HStack spacing={4}>
+					<NavLink
+						to={"/planner"}
+						style={({ isActive }) => {
+							return {
+								fontWeight: isActive ? "bold" : "",
+								color: isActive ? "teal" : "",
+							};
+						}}
+					>
+						<Heading
+							size={"xs"}
+							_hover={{
+								transform: "scale(1.1)",
+								transition: " .4s ease",
+							}}
+						>
+							Planner
+						</Heading>
+					</NavLink>
+					<NavLink
+						to="/ingredients"
+						style={({ isActive }) => {
+							return {
+								fontWeight: isActive ? "bold" : "",
+								color: isActive ? "teal" : "",
+							};
+						}}
+					>
+						<Heading
+							size={"xs"}
+							_hover={{
+								transform: "scale(1.1)",
+								transition: " .4s ease",
+							}}
+						>
+							Ingredients
+						</Heading>
+					</NavLink>
 				</HStack>
 			</HStack>
 			<Spacer></Spacer>

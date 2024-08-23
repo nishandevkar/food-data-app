@@ -27,16 +27,16 @@ import { RiPlayListAddFill } from "react-icons/ri";
 import { AbrigedFoodItem } from "./FoodList";
 import { MdDeleteForever } from "react-icons/md";
 import { BiChevronDown } from "react-icons/bi";
-interface AddDishesProps {
+interface IngredientsTrayProps {
 	ingredientList: AbrigedFoodItem[] | undefined;
 	onClear: () => void;
 	onUpdate: (ingredientList: AbrigedFoodItem[]) => void;
 }
-const AddDishesTray = ({
+const IngredientsTray = ({
 	ingredientList,
 	onClear,
 	onUpdate,
-}: AddDishesProps) => {
+}: IngredientsTrayProps) => {
 	const handleRemoveFoodItem = (removeItem: AbrigedFoodItem) => {
 		let updatedList: AbrigedFoodItem[] | undefined = [];
 		updatedList =
@@ -148,4 +148,4 @@ const AddDishesTray = ({
 	);
 };
 
-export default AddDishesTray;
+export default IngredientsTray;

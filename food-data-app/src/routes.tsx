@@ -1,9 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import SearchFoods from "./components/SearchFoods";
-import Navbar from "./components/Navbar";
-import Planner from "./pages/Planner";
 import Layout from "./pages/Layout";
-import ErrorPage from "./pages/ErrorPage";
+import Planner from "./pages/Planner";
 
 const router = createBrowserRouter([
 	{
