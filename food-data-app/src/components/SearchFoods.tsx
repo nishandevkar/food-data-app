@@ -23,7 +23,7 @@ function SearchFoods() {
 		queryFn: () =>
 			axios
 				.get<SearchResponse>(
-					"https://api.nal.usda.gov/fdc/v1/foods/search",
+					"https://api.nal.usda.gov/fdc/v1/foods/search/ddd",
 					{
 						params: {
 							dataType: selectedDataType,
@@ -36,12 +36,12 @@ function SearchFoods() {
 				.then((res) => {
 					return res.data;
 				}),
+		retry: false,
 	});
 
-	if (queryResponse.error)
-		return <ErrorPage>{queryResponse.error.message}</ErrorPage>;
+	if (queryResponse.error) throw new Error();
 	return (
-		<Box margin={30}>
+		<Box marginBottom={250}>
 			<Flex marginY={4}>
 				<HStack>
 					<SearchInput
