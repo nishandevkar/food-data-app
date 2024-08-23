@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
-import SearchFoods from "./components/SearchFoods";
+import SearchFoods from "./pages/SearchFoods";
 import Layout from "./pages/Layout";
-import Planner from "./components/Planner";
-import Dishes from "./components/Dishes";
+import Planner from "./pages/Planner";
+import Dishes from "./pages/Dishes";
 import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([

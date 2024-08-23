@@ -1,15 +1,15 @@
 import { Box, Flex, HStack, Spacer, Spinner, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import FoodList, { SearchResponse } from "./FoodList";
-import SearchInput from "./SearchInput";
-import SelectDataType from "./SelectDataType";
-import { AbrigedFoodItem } from "./FoodList";
+import FoodList, { SearchResponse } from "../components/FoodList";
+import SearchInput from "../components/SearchInput";
+import SelectDataType from "../components/SelectDataType";
+import { AbrigedFoodItem } from "../components/FoodList";
 import { useLocalStorage } from "react-use";
-import IngredientsTray from "./IngredientsTray";
-import Navbar from "./Navbar";
+import IngredientsTray from "../components/IngredientsTray";
+import Navbar from "../components/Navbar";
 import { useQuery } from "@tanstack/react-query";
-import ErrorPage from "../pages/ErrorPage";
+import ErrorPage from "./ErrorPage";
 
 function SearchFoods() {
 	const [ingredientList, setIngredientList] = useLocalStorage<
@@ -23,7 +23,7 @@ function SearchFoods() {
 		queryFn: () =>
 			axios
 				.get<SearchResponse>(
-					"https://api.nal.usda.gov/fdc/v1/foods/search/ddd",
+					"https://api.nal.usda.gov/fdc/v1/foods/search/",
 					{
 						params: {
 							dataType: selectedDataType,
