@@ -9,6 +9,7 @@ import { useLocalStorage } from "react-use";
 import AddDishesTray from "./AddDishes";
 import Navbar from "./Navbar";
 import { useQuery } from "@tanstack/react-query";
+import ErrorPage from "../pages/ErrorPage";
 
 function SearchFoods() {
 	const [ingredientList, setIngredientList] = useLocalStorage<
@@ -39,22 +40,15 @@ function SearchFoods() {
 					}
 				)
 				.then((res) => {
-					setSearchResponse(res.data);
+					return res.data;
 				}),
 	});
 
-	// if (queryResponse.error) return queryResponse.error.message;
+	if (queryResponse.error)
+		return <ErrorPage>{queryResponse.error.message}</ErrorPage>;
 	return (
 		<Box margin={30}>
 			<Flex marginY={4}>
-				<AddDishesTray
-					ingredientList={ingredientList}
-					onClear={() => setIngredientList([])}
-					onUpdate={(ingredientList) =>
-						setIngredientList(ingredientList)
-					}
-				></AddDishesTray>
-				<Spacer></Spacer>
 				<HStack>
 					<SearchInput
 						onSubmit={(e) => {
@@ -67,13 +61,21 @@ function SearchFoods() {
 						}}
 					></SelectDataType>
 				</HStack>
+				<Spacer></Spacer>
+				<AddDishesTray
+					ingredientList={ingredientList}
+					onClear={() => setIngredientList([])}
+					onUpdate={(ingredientList) =>
+						setIngredientList(ingredientList)
+					}
+				></AddDishesTray>
 			</Flex>
 
 			{queryResponse.isPending ? (
 				<Spinner />
 			) : (
 				<FoodList
-					searchResponse={searchResponse}
+					searchResponse={queryResponse.data}
 					ingredientList={ingredientList}
 					setIngredientList={setIngredientList}
 				></FoodList>

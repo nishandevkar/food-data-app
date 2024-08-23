@@ -10,7 +10,7 @@ const ColorModeSwitch = () => {
 					colorScheme="red"
 					onChange={toggleColorMode}
 				/>
-				<Text marginTop={3.5} whiteSpace="nowrap">
+				<Text fontSize="sm" marginTop={3.5} fontWeight={600}>
 					Dark Mode
 				</Text>
 			</HStack>
