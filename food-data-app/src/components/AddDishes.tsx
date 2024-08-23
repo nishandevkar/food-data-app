@@ -66,7 +66,7 @@ const AddDishesTray = ({
 					</Text>
 				</Button>
 			</ButtonGroup>
-			<Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+			<Drawer isOpen={isOpen} placement="right" onClose={onClose}>
 				<DrawerOverlay />
 				<DrawerContent>
 					<DrawerCloseButton />
