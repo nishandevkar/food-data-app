@@ -31,6 +31,25 @@ const Navbar = () => {
 						</Heading>
 					</NavLink>
 					<NavLink
+						to="/dishes"
+						style={({ isActive }) => {
+							return {
+								fontWeight: isActive ? "bold" : "",
+								color: isActive ? "teal" : "",
+							};
+						}}
+					>
+						<Heading
+							size={"xs"}
+							_hover={{
+								transform: "scale(1.1)",
+								transition: " .4s ease",
+							}}
+						>
+							Dishes
+						</Heading>
+					</NavLink>
+					<NavLink
 						to="/ingredients"
 						style={({ isActive }) => {
 							return {

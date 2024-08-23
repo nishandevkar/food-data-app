@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import SearchFoods from "./components/SearchFoods";
 import Layout from "./pages/Layout";
-import Planner from "./pages/Planner";
+import Planner from "./components/Planner";
+import Dishes from "./components/Dishes";
 
 const router = createBrowserRouter([
 	{
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
 			{
 				path: "planner",
 				element: <Planner></Planner>,
+			},
+			{
+				path: "dishes",
+				element: <Dishes></Dishes>,
 			},
 		],
 	},
