@@ -14,13 +14,7 @@ import theme from "./theme.ts";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes.tsx";
 
-const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			refetchOnWindowFocus: false, // default: true
-		},
-	},
-});
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>

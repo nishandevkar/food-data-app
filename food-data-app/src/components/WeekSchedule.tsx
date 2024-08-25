@@ -1,66 +1,51 @@
-import React from "react";
-import { Box, SimpleGrid, Text, Image, Grid, GridItem } from "@chakra-ui/react";
-import droppedImage from "../assets/404Cat.png";
-import Droppable from "./Droppable";
-import Draggable from "./Draggable";
+import { Box, Grid, Text } from "@chakra-ui/react";
+import { DndContext } from "@dnd-kit/core";
+import WeeklyScheduleRow from "./WeeklyScheduleRow";
 
-interface WeekScheduleProps {
-	containers: number[];
+export interface WeekScheduleProps {
 	parent: any;
 }
-const WeekSchedule = ({ containers, parent }: WeekScheduleProps) => {
-	const elementSize = 20;
+const WeekSchedule = ({ parent }: WeekScheduleProps) => {
+	const dietContainers: string[] = [
+		"Mon",
+		"Tue",
+		"Wed",
+		"Thu",
+		"Fri",
+		"Sat",
+		"Sun",
+	];
+	const dietContainers2: string[] = [
+		"Mon2",
+		"Tue2",
+		"Wed2",
+		"Thu2",
+		"Fri2",
+		"Sat2",
+		"Sun2",
+	];
 	return (
 		<Box p={4}>
 			<Grid
 				templateRows={{ base: "repeat(8, 1fr)", sm: "repeat(2,1fr)" }}
 				templateColumns={{
-					base: "repeat(2=1, 1fr)",
+					base: "repeat(2, 1fr)",
 					sm: "repeat(8,1fr)",
 				}}
-				gap={1}
+				gap={9}
 			>
-				{/* Headings */}
-				{/* <Box />
-				<Text textAlign="center">Mon</Text>
-				<Text textAlign="center">Tue</Text>
-				<Text textAlign="center">Wed</Text>
-				<Text textAlign="center">Thu</Text>
-				<Text textAlign="center">Fri</Text>
-				<Text textAlign="center">Sat</Text>
-				<Text textAlign="center">Sun</Text> */}
-				{/* /* Lunch Row */}
-				<Text fontWeight="bold">Lunch</Text>
-				{containers.map((id) => (
-					<GridItem>
-						<Box display={"flex"} justifyContent={"center"}>
-							{parent === id.toString() ? (
-								<Draggable id="id">
-									<Box boxSize={elementSize} aspectRatio={1}>
-										<Image
-											style={{ touchAction: "none" }}
-											width={elementSize}
-											height={elementSize}
-											src={droppedImage}
-											borderRadius={"50%"}
-											objectFit={"cover"}
-										></Image>
-									</Box>
-								</Draggable>
-							) : (
-								<Droppable id={id.toString()}>
-									<Box
-										style={{ touchAction: "none" }}
-										aspectRatio={1}
-										boxSize={elementSize}
-										borderColor={"gray"}
-										bgColor={"teal"}
-									></Box>
-								</Droppable>
-							)}
-						</Box>
-					</GridItem>
-				))}
+				{/* <Text fontWeight="bold">Lunch</Text> */}
+				<WeeklyScheduleRow
+					supperDetails="Lunch"
+					containers={dietContainers}
+					parent={parent}
+				></WeeklyScheduleRow>
+				{/* <Text fontWeight="bold">Dinner</Text> */}
+				<WeeklyScheduleRow
+					supperDetails="Dinner"
+					containers={dietContainers2}
+					parent={parent}
+				></WeeklyScheduleRow>
 			</Grid>
 		</Box>
 	);

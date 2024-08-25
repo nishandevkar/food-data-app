@@ -1,28 +1,14 @@
-import {
-	Box,
-	Grid,
-	GridItem,
-	Heading,
-	Text,
-	Image,
-	Square,
-	Center,
-} from "@chakra-ui/react";
+import { Box, Image } from "@chakra-ui/react";
 
 import { DndContext } from "@dnd-kit/core";
-import draggableImage from "../assets/errorCat.gif";
+import { useState } from "react";
 import droppedImage from "../assets/404Cat.png";
+import draggableImage from "../assets/errorCat.gif";
 import Draggable from "../components/Draggable";
-import Droppable from "../components/Droppable";
-import { MouseEventHandler, useState } from "react";
-import DroppableGrid from "../components/DroppableGrid";
 import WeekSchedule from "../components/WeekSchedule";
 
 const Planner = () => {
-	const containers = ["A", "B", "C"];
-	const dietContainers: number[] = [1, 2, 3, 4, 5, 6, 7];
 	const [parent, setParent] = useState(null);
-	const [isDropped, setIsDropped] = useState(false);
 	const draggableMarkup = (
 		<Draggable id="draggable">
 			<Box boxSize={20}>
@@ -53,33 +39,12 @@ const Planner = () => {
 			<DndContext
 				onDragEnd={handleDragEnd}
 				autoScroll={{
-					acceleration: 20000,
+					layoutShiftCompensation: false,
+					acceleration: 1000,
 				}}
 			>
 				{parent === null ? draggableMarkup : <Box boxSize={20}></Box>}
-
-				{/* <Grid templateColumns="repeat(6, 1fr)" gap={6}>
-					{containers.map((id) => (
-						<GridItem
-							key={id}
-							colSpan={2}
-							h="20"
-							bg="tomato"
-							display={"flex"}
-							justifyContent={"center"}
-						>
-							{parent === id ? (
-								droppedMarkup
-							) : (
-								<Droppable id={id}>Drop here</Droppable>
-							)}
-						</GridItem>
-					))}
-				</Grid> */}
-				<WeekSchedule
-					parent={parent}
-					containers={dietContainers}
-				></WeekSchedule>
+				<WeekSchedule parent={parent}></WeekSchedule>
 			</DndContext>
 		</>
 	);
