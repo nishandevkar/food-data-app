@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import ColorModeSwitch from "./ColorModeSwitch";
 const Navbar = () => {
 	return (
-		<Flex margin={3}>
+		<Flex>
 			<HStack>
 				<Heading as="h2" size={"xl"}>
 					<TbHealthRecognition />

@@ -15,7 +15,7 @@ function SearchFoods() {
 	const [ingredientList, setIngredientList] = useLocalStorage<
 		AbrigedFoodItem[]
 	>("ingredientList", []);
-	const [searchText, setSearchText] = useState("");
+	const [searchText, setSearchText] = useState(" ");
 	const [selectedDataType, setSelectedDataType] = useState("");
 
 	const queryResponse = useQuery({
@@ -27,7 +27,7 @@ function SearchFoods() {
 					{
 						params: {
 							dataType: selectedDataType,
-							api_key: "SaQy2io5EY4siiZgsIKGCHkQxrLaJE7SPZdfkveT",
+							api_key: "PdxatbffFmmEXNOGf4w3zVyudklvzavVQje2NaRB",
 							query: searchText,
 							pageSize: 6,
 						},

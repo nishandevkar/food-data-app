@@ -25,6 +25,7 @@ const router = createBrowserRouter([
 			},
 		],
 	},
+	{ path: "/dnd", element: <Planner></Planner> },
 ]);
 
 export default router;
