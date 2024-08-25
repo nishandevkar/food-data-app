@@ -1,21 +1,23 @@
-import { Box, HStack, Heading, List, ListItem, Text } from "@chakra-ui/react";
-import IngredientsTray from "../components/IngredientsTray";
-import { AbrigedFoodItem } from "../components/FoodList";
-import { useLocalStorage } from "react-use";
-import { useState } from "react";
-
+import { NavLink } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { Button, Box } from "@chakra-ui/react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 const Dishes = () => {
-	const [ingredientList, setIngredientList] = useLocalStorage<
-		AbrigedFoodItem[]
-	>("ingredientList", []);
+	const location = useLocation();
+	const [parent, enableAnimation] = useAutoAnimate();
+	const isAddingDish = location.pathname === "/dishes/add-dish";
+	const isAddingIngredient = location.pathname === "/dishes/add-ingredient";
+
 	return (
-		<>
-			<IngredientsTray
-				ingredientList={ingredientList}
-				onClear={function (): void {}}
-				onUpdate={function (ingredientList: AbrigedFoodItem[]): void {}}
-			></IngredientsTray>
-		</>
+		<Box padding={4} ref={parent}>
+			{/* Conditionally render the button based on the route */}
+			{!isAddingDish && !isAddingIngredient && (
+				<NavLink to={"/dishes/add-dish"}>
+					<Button>Add a dish!</Button>
+				</NavLink>
+			)}
+			<Outlet />
+		</Box>
 	);
 };
 
