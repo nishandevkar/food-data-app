@@ -25,29 +25,34 @@ const WeekSchedule = ({ parent }: WeekScheduleProps) => {
 		"Sun2",
 	];
 	return (
-		<Box p={4}>
-			<Grid
-				templateRows={{ base: "repeat(8, 1fr)", sm: "repeat(2,1fr)" }}
-				templateColumns={{
-					base: "repeat(2, 1fr)",
-					sm: "repeat(8,1fr)",
-				}}
-				gap={9}
-			>
-				{/* <Text fontWeight="bold">Lunch</Text> */}
-				<WeeklyScheduleRow
-					supperDetails="Lunch"
-					containers={dietContainers}
-					parent={parent}
-				></WeeklyScheduleRow>
-				{/* <Text fontWeight="bold">Dinner</Text> */}
-				<WeeklyScheduleRow
-					supperDetails="Dinner"
-					containers={dietContainers2}
-					parent={parent}
-				></WeeklyScheduleRow>
-			</Grid>
-		</Box>
+		<div>
+			<Box p={4}>
+				<Grid
+					templateRows={{
+						base: "repeat(8, 1fr)",
+						sm: "repeat(2,1fr)",
+					}}
+					templateColumns={{
+						base: "repeat(2, 1fr)",
+						sm: "repeat(8,1fr)",
+					}}
+					gap={9}
+				>
+					{/* <Text fontWeight="bold">Lunch</Text> */}
+					<WeeklyScheduleRow
+						supperDetails="Lunch"
+						containers={dietContainers}
+						parent={parent}
+					></WeeklyScheduleRow>
+					{/* <Text fontWeight="bold">Dinner</Text> */}
+					<WeeklyScheduleRow
+						supperDetails="Dinner"
+						containers={dietContainers2}
+						parent={parent}
+					></WeeklyScheduleRow>
+				</Grid>
+			</Box>
+		</div>
 	);
 };
 

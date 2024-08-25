@@ -1,17 +1,19 @@
-import { Box, Flex, HStack, Spacer, Spinner, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, Spacer, Spinner } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import FoodList, { SearchResponse } from "../components/FoodList";
+import { useState } from "react";
+import { useLocalStorage } from "react-use";
+import FoodList, {
+	AbrigedFoodItem,
+	SearchResponse,
+} from "../components/FoodList";
+import IngredientsTray from "../components/IngredientsTray";
 import SearchInput from "../components/SearchInput";
 import SelectDataType from "../components/SelectDataType";
-import { AbrigedFoodItem } from "../components/FoodList";
-import { useLocalStorage } from "react-use";
-import IngredientsTray from "../components/IngredientsTray";
-import Navbar from "../components/Navbar";
-import { useQuery } from "@tanstack/react-query";
-import ErrorPage from "./ErrorPage";
 
 function SearchFoods() {
+	// TODO: Pagination of the list of ingredients
+
 	const [ingredientList, setIngredientList] = useLocalStorage<
 		AbrigedFoodItem[]
 	>("ingredientList", []);
@@ -41,6 +43,8 @@ function SearchFoods() {
 
 	if (queryResponse.error) throw new Error();
 	return (
+		// INPUTS for searching and source data selection
+
 		<Box marginBottom={250}>
 			<Flex marginY={4}>
 				<HStack>
@@ -57,6 +61,7 @@ function SearchFoods() {
 				</HStack>
 				<Spacer />
 				<Box marginLeft={4}>
+					{/* Drawer for viewing selected ingredients */}
 					<IngredientsTray
 						ingredientList={ingredientList}
 						onClear={() => setIngredientList([])}

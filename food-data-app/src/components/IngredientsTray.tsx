@@ -27,6 +27,7 @@ import { RiPlayListAddFill } from "react-icons/ri";
 import { AbrigedFoodItem } from "./FoodList";
 import { MdDeleteForever } from "react-icons/md";
 import { BiChevronDown } from "react-icons/bi";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 interface IngredientsTrayProps {
 	ingredientList: AbrigedFoodItem[] | undefined;
 	onClear: () => void;
@@ -37,6 +38,7 @@ const IngredientsTray = ({
 	onClear,
 	onUpdate,
 }: IngredientsTrayProps) => {
+	const [parent, enableAnimations] = useAutoAnimate();
 	const handleRemoveFoodItem = (removeItem: AbrigedFoodItem) => {
 		let updatedList: AbrigedFoodItem[] | undefined = [];
 		updatedList =
@@ -73,7 +75,11 @@ const IngredientsTray = ({
 					<DrawerHeader>Chosen Ingredients</DrawerHeader>
 
 					<DrawerBody>
-						<ul className="list-group" data-bs-theme="dark">
+						<ul
+							className="list-group"
+							data-bs-theme="dark"
+							ref={parent}
+						>
 							{ingredientList && ingredientList.length > 0 ? (
 								ingredientList.map((ingredient) => (
 									<li
